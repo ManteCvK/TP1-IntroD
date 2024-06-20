@@ -53,28 +53,27 @@ def data(id_contenido):
 
 
 @app.route("/contenidos", methods = ["POST"])
-def create_character():
-    name = request.json.get("name")
-    names = request.json.get("names")
-    publisher = request.json.get("publisher")
-    gender = request.json.get("gender")
-    alignment = request.json.get("alignment")
-    image = request.json.get("image")
-    race = request.json.get("race")
+def nuevo_contenido():
+    try: 
+        data= request.json
+        nuevo_nombre = data.get('nombre')
+        nuevo_genero = data.get('genero')
+        nueva_fecha_lunch = data.get('fecha de lanzamiento')
+        nueva_plataforma = data.get('plataforma')
+        nuevo_tipo = data.get ('tipo')
+        nuevo_kids = data.get ('kids')
+        nuevo_contenido = Contenido(nombre=nuevo_nombre, genero = nuevo_genero, fecha_lunch = nueva_fecha_lunch, 
+                                    donde_ver = nueva_plataforma, tipo = nuevo_tipo, kids = nuevo_kids),201
+        db.session.add(nuevo_contenido)
+        db.session.commit()
 
-    id = int(get_all_characters()[-1]["id"]) + 1
-
-    character = {
-        "id": id,
-        "name": name,
-        "names": names,
-        "publisher": publisher,
-        "gender": gender,
-        "alignment": alignment,
-        "image": image,
-        "race": race
-    }
-    return {"success": add_character(character), "id": id} 
+        return (jsonify({'contenido':{'id':nuevo_contenido.id, 'nombre': nuevo_contenido.nombre, 
+        'genero':nuevo_contenido.genero, 'fecha de lanzamiento': nuevo_contenido.fecha_lunch, 
+        'plataforma donde ver': nuevo_contenido.donde_ver, 'tipo': nuevo_contenido.peli_o_serie, 
+        'kids':nuevo_contenido.kids }}))
+    except Exception as error:
+        print(error)
+        return (jsonify("no se pudo agregar el nuevo contenido")),500
 
 @app.route("/contenidos", methods = ["PUT"])
 def modificar_contenido():
