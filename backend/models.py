@@ -1,9 +1,9 @@
-from flask import Flask
+cfrom flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-class contenido(db.Model):
+class Contenido(db.Model):
     __tablename__= 'contenidos'
     id= db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
@@ -14,18 +14,18 @@ class contenido(db.Model):
     peli_o_serie = db.column (db.String(50),db.ForeignKey('pelis_o_series.id'))
 
 
-class genero(db.Model):
+class Genero(db.Model):
     __tablename__= 'generos'
     id= db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     
-class plataforma(db.Model):
+class Plataforma(db.Model):
     __tablename__= 'plataformas'
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)
     cuota_mensual = db.Column(db.Integer, nullable = False)
 
-class peli_o_serie(db.Model):
+class Peli_o_serie(db.Model):
     __tablename__= 'pelis_o_series'
     id= db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable=False)

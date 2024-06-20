@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from time import sleep
 
+from models import Contenido, db 
+
 app = Flask(__name__)
 port = 5000
 app.config['SQLALCHEMY_DATABASE_URI']=''
@@ -10,18 +12,30 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
 @app.route("/contenidos")
-def data():
+def contenidos():
     try: 
-        elementos = contenido.query.all()
+        contenidos = Contenido.query.all()
         contenidos_data = []
-
-    except
+        for contenido in contenidos:
+            contenido_data = {
+                'id':contenido.id,
+                'nombre':contenido.nombre,
+                'genero':contenido.genero,
+                'fecha de lanzamiento': contenido.fecha_lunch,
+                'plataforma': contenido.donde_ver,
+                'tipo': contenido.peli_o_serie,
+                'kids': contenido.kids,
+            }
+            contenidos_data.append(contenido_data)
+            return (jsonify(contenidos_data))
+    except:
+        return(jsonify("No hay elementos"))
 
 
 @app.route("/contenidos/<id_contenido>")
 def data(id_contenido):
     try:
-        contenido=contenido.query.get(id_contenido)
+        contenido= Contenido.query.get(id_contenido)
         contenido_data = {
             'id':contenido.id,
             'nombre': contenido.nombre,
@@ -29,6 +43,7 @@ def data(id_contenido):
             'fecha de lanzamiento': contenido.fecha_lunch,
             'plataforma': contenido.donde_ver,
             'tipo': contenido.peli_o_serie,
+            'kids':contenido.kids,
         }
         return jsonify(contenido_data)
     except:
@@ -59,10 +74,10 @@ def create_character():
         "image": image,
         "race": race
     }
-    return {"success": add_character(character), "id": id}
+    return {"success": add_character(character), "id": id} 
 
 @app.route("/contenidos", methods = ["PUT"])
-def alter_character():
+def modificar_contenido():
     id = request.json.get("id")
     name = request.json.get("name")
     names = request.json.get("names")
