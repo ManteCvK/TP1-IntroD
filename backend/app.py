@@ -5,7 +5,7 @@ from models import Contenido, db
 
 app = Flask(__name__)
 port = 5000
-app.config['SQLALCHEMY_DATABASE_URI']=''
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql+osycopg2//postgres:postgres@localhost:5432/pelis'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 @app.route("/")
