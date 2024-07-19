@@ -25,7 +25,30 @@
   </header>
   </div>
   
-  <div class="container" id="personaje"> </div>
+  <div class="container my-4" >
+    <div class="row">
+        <div class="col-12 col-md-10 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-6">
+                            <img src="" alt="" id="imagen" class="w-100">
+                        </div>
+                        <div class="col-6">
+                            <h1 id="nombre"></h1>
+                            <h3 id="estado">Estado: </h3>
+                            <h3 id="fecha">Fecha de estreno: </h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-danger" onclick="remove_character()">Remove</button>
+                    <a id="btnEdit" class="btn btn-warning" href="/character/edit">Edit</a>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
 
   <div class="container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -47,37 +70,26 @@
         window.location.href = "/";
     }
 
-    document.getElementById("btnEdit").setAttribute("href", `/character/edit?id=${id}`)
-
     function response_received(response) {
         return response.json()
     }
 
-    function parse_data(character) {
+    function parse_data(content) {
 
-        const name = document.getElementById("name");
-        name.innerText = character.name;
+        const image = document.getElementById("imagen");
+        image.setAttribute("src", content.imagen)
 
-        const image = document.getElementById("image");
-        image.setAttribute("src", character.image);
+        const nombre = document.getElementById("nombre");
+        nombre.setAttribute("class", "card-body");
+        nombre.append(content.nombre);
 
-        const alignment = document.getElementById("alignment");
-        alignment.innerText = character.alignment;
-        if (character.alignment === "good") {
-            alignment.classList.add("text-success")
-        } else if (character.alignment === "bad") {
-            alignment.classList.add("text-danger")
-        } else {
-            alignment.classList.add("text-warning")
-        }
+        const estado = document.getElementById("estado");
+        estado.setAttribute("class", "card-body");
+        estado.append(content.estado);
 
-        const namesList = character.names.split(",")
-        const names = document.getElementById("names");
-        for (let index = 0; index < namesList.length; index++) {
-            const element = document.createElement("li")
-            element.innerText = namesList[index]
-            names.append(element)
-        }
+        const fecha = document.getElementById("fecha");
+        fecha.setAttribute("class", "card-body");
+        fecha.append(content.fecha);
     }
 
     function handle_error(error) {

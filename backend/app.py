@@ -29,6 +29,7 @@ def contenidos():
                 'tipo': contenido.peli_o_serie,
                 'kids': contenido.kids,
                 'imagen': contenido.imagen,
+                'estado' : contenido.estado,
             }
             contenidos_data.append(contenido_data)
         return (jsonify(contenidos_data))
@@ -44,11 +45,12 @@ def data(id_contenido):
             'id':contenido.id,
             'nombre': contenido.nombre,
             'genero': contenido.genero,
-            'fecha de lanzamiento': contenido.fecha_lunch,
+            'fecha': contenido.fecha_lunch,
             'plataforma': contenido.donde_ver,
             'tipo': contenido.peli_o_serie,
             'kids':contenido.kids,
             'imagen': contenido.imagen,
+            'estado' : contenido.estado,
         }
         return jsonify(contenido_data)
     except:

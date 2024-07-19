@@ -8,7 +8,7 @@ class Contenido(db.Model):
     id= db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(100), nullable = False)
     genero = db.Column(db.Integer, db.ForeignKey('generos.id_genero'))
-    fecha_lunch = db.Column(db.Date, nullable = False)
+    fecha_lunch = db.Column(db.Integer, nullable = False)
     donde_ver = db.Column(db.Integer, db.ForeignKey('plataformas.id_plataforma'))
     kids = db.Column(db.Boolean)
     peli_o_serie = db.Column(db.Integer,db.ForeignKey('pelis_o_series.id_peli_o_serie'))
