@@ -1,17 +1,20 @@
 from flask import Flask, request, jsonify
 from time import sleep
+from flask_cors import CORS
 
-from models import Contenido, db 
+from models import db, Contenido
 
 app = Flask(__name__)
+CORS(app)
 port = 5000
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql+osycopg2//postgres:postgres@localhost:5432/pelis'
+app.config['SQLALCHEMY_DATABASE_URI']='postgresql+psycopg2://postgres:postgres@localhost:5432/pelis'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 @app.route("/")
+def hello_world():
+    return 'HOLA'
 
-
-@app.route("/contenidos")
+@app.route("/contenidos", methods = ["GET"])
 def contenidos():
     try: 
         contenidos = Contenido.query.all()
@@ -25,14 +28,15 @@ def contenidos():
                 'plataforma': contenido.donde_ver,
                 'tipo': contenido.peli_o_serie,
                 'kids': contenido.kids,
+                'imagen': contenido.imagen,
             }
             contenidos_data.append(contenido_data)
-            return (jsonify(contenidos_data))
+        return (jsonify(contenidos_data))
     except:
         return(jsonify("No hay elementos"))
 
 
-@app.route("/contenidos/<id_contenido>")
+@app.route("/contenidos/<id_contenido>", methods = ["GET"])
 def data(id_contenido):
     try:
         contenido= Contenido.query.get(id_contenido)
@@ -44,12 +48,11 @@ def data(id_contenido):
             'plataforma': contenido.donde_ver,
             'tipo': contenido.peli_o_serie,
             'kids':contenido.kids,
+            'imagen': contenido.imagen,
         }
         return jsonify(contenido_data)
     except:
         return(jsonify("No se ha encontrado este elemento"))
-
-@app.route("/contenidos/<id>", methods = ["DELETE"])
 
 
 @app.route("/contenidos", methods = ["POST"])
@@ -63,7 +66,7 @@ def nuevo_contenido():
         nuevo_tipo = data.get ('tipo')
         nuevo_kids = data.get ('kids')
         nuevo_contenido = Contenido(nombre=nuevo_nombre, genero = nuevo_genero, fecha_lunch = nueva_fecha_lunch, 
-                                    donde_ver = nueva_plataforma, tipo = nuevo_tipo, kids = nuevo_kids),201
+        donde_ver = nueva_plataforma, tipo = nuevo_tipo, kids = nuevo_kids),201
         db.session.add(nuevo_contenido)
         db.session.commit()
 
@@ -71,6 +74,7 @@ def nuevo_contenido():
         'genero':nuevo_contenido.genero, 'fecha de lanzamiento': nuevo_contenido.fecha_lunch, 
         'plataforma donde ver': nuevo_contenido.donde_ver, 'tipo': nuevo_contenido.peli_o_serie, 
         'kids':nuevo_contenido.kids }}))
+    
     except Exception as error:
         print(error)
         return (jsonify("no se pudo agregar el nuevo contenido")),500
@@ -96,7 +100,7 @@ def modificar_contenido():
         "image": image,
         "race": race
     }
-    return {"success": edit_character(character), "id": id}
+    return {"success": "id"}
 
 if __name__ == '__main__':
     print('starting server...')
@@ -105,3 +109,4 @@ if __name__ == '__main__':
         db.create_all()
     app.run(host='0.0.0.0', debug=True, port=port)
     print('started...')
+    

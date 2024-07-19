@@ -10,139 +10,142 @@
 </head>
 
 <body data-bs-theme="dark">
-    <div class="container">
+  <div class="container">
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">    
         <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
             <span class="fs-2">Watchlist</span>
           </a>
           <ul class="nav nav-pills">
-            <li class="nav-item"><a href="" class="nav-link active" aria-current="page">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">Mi Lista</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
+            <li class="nav-item"><a href="/lista" class="nav-link">Mi Lista</a></li>
+            <li class="nav-item"><a href="/about" class="nav-link">About</a></li>
 
           </ul>
     </header>
+  </div>
+
+  <div class="container" id="contenidos">
+        <h1>PELICULAS</h1>
+  </div>
+ 
+  <form class="container">
+    <h3> ¿Hay algun elemento que desees agregar?</h3>
+    <br>
+    <div class="col-auto">
+      <label class="form-label">Nombre:</label>
+      <input type="text" class="form-control" placeholder="Ingrese nombre aqui">
+      <br>
+    </div>
+    <div class="col-auto">
+      <label class="form-label">Tipo:</label>
+      <select class="form-select" aria-label="Default select example">
+        <option disabled selected>Seleccione el tipo</option>
+        <option value="1">Pelicula</option>
+        <option value="0">Serie</option>
+      </select>
+      <br>
+    </div>
+    <div class="col-auto">
+      <label class="form-label">Genero:</label>
+      <select class="form-select" aria-label="Default select example">
+        <option disabled selected>Seleccione el genero</option>
+        <option value="0">Terror</option>
+        <option value="1">Romantico</option>                
+        <option value="2">Ciencia Ficcion</option>
+        <option value="3">Animacion</option>
+        <option value="4">Drama</option>
+        <option value="5">Comedia</option>
+        <option value="6">Fantastica</option>
+     </select>
+     <br>
+    </div>
+    <div class="col-sm">
+      <label class="form-label">Plataforma:</label>
+      <select class="form-select" aria-label="Default select example">
+        <option disabled selected>Seleccione la plataforma</option>
+        <option value="0">Netflix</option>
+        <option value="1">HBO</option>                
+        <option value="2">Prime Video</option>
+        <option value="3">Disney +</option>
+        <option value="4">Apple TV</option>
+      </select>
+     <br>
+    </div>
+    <div class="col-auto">   
+     <label class="form-label">Fecha de estreno:</label>
+     <input type="date" class="form-control">
+    </div>
+    <div class ="col-auto">    
+      <br>         
+      <div class="col-auto">
+        <label class="form-label">Imagen:</label>
+        <input type="url" class="form-control" placeholder="Ingrese el link de la imagen aqui">
+        <br>
+      </div>
+      <button type="submit" class="btn btn-primary">Agregar Contenido</button>
     </div>
 
+  </form>
 
- 
-    <form class="container">
-        <h3> ¿Hay algun elemento que desees agregar?</h3>
-        <br>
-        <div class="col-auto">
-          <label class="form-label">Nombre:</label>
-          <input type="text" class="form-control" placeholder="Ingrese nombre aqui">
-          <br>
-        </div>
-        <div class="col-auto">
-            <label class="form-label">Tipo:</label>
-            <select class="form-select" aria-label="Default select example">
-                <option disabled selected>Seleccione el tipo</option>
-                <option value="1">Pelicula</option>
-                <option value="0">Serie</option>
-              </select>
-          <br>
-        </div>
-        <div class="col-auto">
-            <label class="form-label">Genero:</label>
-            <select class="form-select" aria-label="Default select example">
-                <option disabled selected>Seleccione el genero</option>
-                <option value="0">Terror</option>
-                <option value="1">Romantico</option>                
-                <option value="2">Ciencia Ficcion</option>
-                <option value="3">Animacion</option>
-                <option value="4">Drama</option>
-                <option value="5">Comedia</option>
-                <option value="6">Fantastica</option>
-              </select>
-             <br>
-        </div>
-        <div class="col-sm">
-            <label class="form-label">Plataforma:</label>
-            <select class="form-select" aria-label="Default select example">
-                <option disabled selected>Seleccione la plataforma</option>
-                <option value="0">Netflix</option>
-                <option value="1">HBO</option>                
-                <option value="2">Prime Video</option>
-                <option value="3">Disney +</option>
-                <option value="4">Apple TV</option>
-              </select>
-          <br>
-        </div>
-        <div class="col-auto">   
-            <label class="form-label">Fecha de estreno:</label>
-            <input type="date" class="form-control">
-        </div>
-        <div class ="col-auto">    
-        <br>         
-        <div class="col-auto">
-            <label class="form-label">Imagen:</label>
-            <input type="url" class="form-control" placeholder="Ingrese el link de la imagen aqui">
-            <br>
-          </div>
-        <button type="submit" class="btn btn-primary">Agregar Contenido</button>
-        </div>
+  <div class="container">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <p class="col-md-4 mb-0 text-body-secondary">© 2024 Company, Inc</p>
+      <ul class="nav col-md-4 justify-content-end">
+        <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
+        <li class="nav-item"><a href="/lista" class="nav-link px-2 text-body-secondary">Mi Lista</a></li>
+        <li class="nav-item"><a href="/about" class="nav-link px-2 text-body-secondary">About</a></li>
+      </ul>
+    </footer>
+  </div>
 
-      </form>
-
-    <div class="container">
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-          <p class="col-md-4 mb-0 text-body-secondary">© 2024 Company, Inc</p>
-          <ul class="nav col-md-4 justify-content-end">
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Mi Lista</a></li>
-            <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-          </ul>
-        </footer>
-      </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script>
-        function response_received(response) {
-            return response.json()
-        }
+  crossorigin="anonymous"></script>
 
-        function parse_data(content) {
-            console.log("TENGO LA LISTA DE PERSONAJES!")
 
-            const container = document.getElementById("characters");
-            for (let index = 0; index < content.length; index++) {
-                const item = document.createElement("div");
-                item.setAttribute("class", "col-6 col-md-4 col-lg-3 col-xl-2");
 
-                const card = document.createElement("a");
-                card.setAttribute("class", "card text-decoration-none");
-                card.setAttribute("href", `/character?id=${content[index].id}`);
+  <script>
+   function response_received(response) {
+     return response.json()
 
-                const image = document.createElement("img");
-                image.setAttribute("class", "card-img-top");
-                image.setAttribute("src", content[index].image)
+    }
+    function parse_data(content) {
+      const container = document.getElementById("contenidos");
+      for (let index = 0; index < content.length; index++) {
+        const item = document.createElement("div");
+        item.setAttribute("class", "col-6 col-md-4 col-lg-3 col-xl-2");
+        const card = document.createElement("a");
+        card.setAttribute("class", "card text-decoration-none");
+        card.setAttribute("href", `/contenido?id=${content[index].id}`);
 
-                const card_body = document.createElement("div");
-                card_body.setAttribute("class", "card-body");
+        const image = document.createElement("img");
+        image.setAttribute("class", "card-img-top");
+        image.setAttribute("src", content[index].imagen)
 
-                card_body.append(content[index].name);
-                card.append(image);
-                card.append(card_body);
-                item.append(card);
+        const card_body = document.createElement("div");
+        card_body.setAttribute("class", "card-body");
 
-                container.append(item);
-            }
-        }
+        card_body.append(content[index].nombre);
+        card.append(image);
+        card.append(card_body);
+        item.append(card);
 
-        function request_error(error) {
-            console.log("ERROR")
-            console.log(error);
-        }
+        container.append(item);
+      }
+    }
 
-        fetch("http://localhost:5000/contenidos")
-            .then(response_received)
-            .then(parse_data)
-            .catch(request_error)
-    </script>
+    function request_error(error) {
+      console.log("ERROR")
+      console.log(error);
+    }
+
+    fetch("http://localhost:5000/contenidos")
+      .then(response_received)
+      .then(parse_data)
+      .catch(request_error)
+      
+  </script>
 </body>
 
 </html>
