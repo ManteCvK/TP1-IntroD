@@ -31,17 +31,26 @@
             <div class="card">
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-4">
                             <img src="" alt="" id="imagen" class="w-100">
                         </div>
-                        <div class="col-6">
+                        <div class="col-8">
                             <h1 id="nombre"></h1>
-                            <h3 id="estado">Estado: </h3>
+                            <h3 id="genero">Genero: </h3>
                             <h3 id="fecha">Fecha de estreno: </h3>
+                            <h3 id="tipo">Tipo: </h3>
+                            <h3 id="plataforma">Plataforma: </h3>
+                            <h3 id="estado"> </h3>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
+                <div class="card-footer text-center"> 
+                  
+                    <button class="btn btn-secondary" onclick="remove_character()"> Agregar a la lista</button>
+                    <button class="btn btn-success" onclick="remove_character()">Marcar como terminado</button>
+                    <button class="btn btn-primary" onclick="remove_character()">Sacar de mi lista</button>
+                    <br>
+                    <br>
                     <button class="btn btn-danger" onclick="remove_character()">Remove</button>
                     <a id="btnEdit" class="btn btn-warning" href="/character/edit">Edit</a>
                 </div>
@@ -80,12 +89,53 @@
         image.setAttribute("src", content.imagen)
 
         const nombre = document.getElementById("nombre");
-        nombre.setAttribute("class", "card-body");
+        nombre.setAttribute("class", "card-title");
         nombre.append(content.nombre);
+
+        const tipo = document.getElementById("tipo");
+        tipo.setAttribute("class", "card-body");
+        if (content.tipo == 0)
+         tipo.append("Pelicula");
+        if (content.tipo == 1)
+         tipo.append("Serie");
+
+        const genero = document.getElementById("genero");
+        genero.setAttribute("class", "card-body");
+        if (content.genero == 0)
+         genero.append("Terror");
+        if (content.genero == 1)
+         genero.append("Romance");
+        if (content.genero == 2)
+         genero.append("Ciencia Ficcion");
+        if (content.genero == 3)
+         genero.append("Animacion"); 
+        if (content.genero == 4)
+         genero.append("Drama");
+        if (content.genero == 5)
+         genero.append("Comedia");
+        if (content.genero == 6)
+         genero.append("Fantasia");
+
+        const plataforma = document.getElementById("plataforma");
+        plataforma.setAttribute("class", "card-body");
+        if (content.plataforma == 0)
+            plataforma.append("Netflix");
+        if (content.plataforma == 1)
+            plataforma.append("HBO");
+        if (content.plataforma == 2)
+            plataforma.append("Prime Video");
+        if (content.plataforma == 3)
+            plataforma.append("Disney +"); 
+        if (content.plataforma == 4)
+            plataforma.append("Apple TV");
 
         const estado = document.getElementById("estado");
         estado.setAttribute("class", "card-body");
-        estado.append(content.estado);
+        if (content.estado == 0)
+         estado.append("Estado: Visto");
+        if (content.estado == 1)
+         estado.append("Estado: En lista");
+
 
         const fecha = document.getElementById("fecha");
         fecha.setAttribute("class", "card-body");
@@ -125,6 +175,8 @@
             .then(delete_response)
             .catch(handle_error)
     }
+
+    
 </script>
 </body>
 </html>
