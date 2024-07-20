@@ -46,22 +46,25 @@
                 </div>
                 <div class="card-footer text-center"> 
                   
-                    <button class="btn btn-secondary" onclick="remove_character()"> Agregar a la lista</button>
-                    <button class="btn btn-success" onclick="remove_character()">Marcar como terminado</button>
-                    <button class="btn btn-primary" onclick="remove_character()">Sacar de mi lista</button>
+                    <button class="btn btn-secondary" onclick="editar_contenido()"> Agregar a la lista</button>
+                    <button class="btn btn-success" onclick="editar_contenido()">Marcar como terminado</button>
+                    <button class="btn btn-primary" onclick="editar_contenido()">Sacar de mi lista</button>
                     <br>
                     <br>
-                    <button class="btn btn-danger" onclick="remove_character()">Remove</button>
-                    <a id="btnEdit" class="btn btn-warning" href="/character/edit">Edit</a>
+                    <button class="btn btn-danger" onclick="borrar_contenido()">Borrar</button>
+                    <a id="btnEdit" class="btn btn-warning" href="/character/edit">Editar</a>
                 </div>
             </div>
         </div>
     </div>
  </div>
 
+ <br>
+
+
   <div class="container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-      <p class="col-md-4 mb-0 text-body-secondary">© 2024 Company, Inc</p>
+      <p class="col-md-4 mb-0 text-body-secondary">© 2024 K.I.S.S, Inc</p>
       <ul class="nav col-md-4 justify-content-end">
         <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
         <li class="nav-item"><a href="/lista" class="nav-link px-2 text-body-secondary">Mi Lista</a></li>
@@ -115,6 +118,9 @@
          genero.append("Comedia");
         if (content.genero == 6)
          genero.append("Fantasia");
+        if (content.genero == 7)
+         genero.append("Accion");
+
 
         const plataforma = document.getElementById("plataforma");
         plataforma.setAttribute("class", "card-body");
@@ -154,16 +160,16 @@
 
     function delete_response(data) {
         if (data.success) {
-            alert("Character removed successfully")
+            alert("Contenido borrado exitosamente")
             window.location.href = "/";
         } else {
-            alert("An error has occurred. Try again")
+            alert("Error!")
         }
     }
 
-    function remove_character() {
-        const confirmation = confirm(`Are you sure you want to remove character ${id}?`)
-        if (!confirmation) {
+    function borrar_contenido() {
+        const confirmar = confirm(`Seguro quieres borrar el contenido ${id}?`)
+        if (!confirmar) {
             return;
         }
 
@@ -171,12 +177,11 @@
             `http://localhost:5000/contenidos/${id}`,
             { method: "DELETE" }
         )
-            .then((res) => res.json()) // === response_received
+            .then(response_received)
             .then(delete_response)
             .catch(handle_error)
     }
 
-    
 </script>
 </body>
 </html>

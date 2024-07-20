@@ -10,10 +10,6 @@ port = 5000
 app.config['SQLALCHEMY_DATABASE_URI']='postgresql+psycopg2://postgres:postgres@localhost:5432/pelis'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-@app.route("/")
-def hello_world():
-    return 'HOLA'
-
 @app.route("/contenidos", methods = ["GET"])
 def contenidos():
     try: 
@@ -55,6 +51,18 @@ def data(id_contenido):
         return jsonify(contenido_data)
     except:
         return(jsonify("No se ha encontrado este elemento"))
+
+@app.route("/contenidos/<id_contenido>", methods = ["DELETE"])
+def borrar(id_contenido):
+    try:
+        if Contenido.query.get(id_contenido) == None:
+            return{"success": False}
+        data = Contenido.query.get(id_contenido)
+        db.session.delete(data)
+        db.session.commit()
+        return{"success": True}
+    except:
+        return{"success": False}
 
 
 @app.route("/contenidos", methods = ["POST"])
