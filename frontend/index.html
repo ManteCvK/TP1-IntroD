@@ -14,7 +14,7 @@
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">    
         <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-            <span class="fs-2">Watchlist</span>
+            <span class="fs-2">WATCHLIST</span>
           </a>
           <ul class="nav nav-pills">
             <li class="nav-item"><a href="/" class="nav-link active" aria-current="page">Home</a></li>
@@ -25,10 +25,13 @@
     </header>
   </div>
 
-  <div class="container" id="contenidos">
-        <h1>PELICULAS</h1>
+  <div class="container" >
+     <div class="row g-4" id="contenidos">
   </div>
- 
+  </div>
+ <br>
+ <br>
+ <br>
   <form class="container">
     <h3> ¿Hay algun elemento que desees agregar?</h3>
     <br>
@@ -122,10 +125,15 @@
         const image = document.createElement("img");
         image.setAttribute("class", "card-img-top");
         image.setAttribute("src", content[index].imagen)
+        image.setAttribute("width", 300);
+        image.setAttribute("height", 380);
 
         const card_body = document.createElement("div");
         card_body.setAttribute("class", "card-body");
         card_body.append(content[index].nombre);
+        const card_text = document.createElement("h3");
+        card_text.setAttribute("class","card-title align-center");
+        card_body.append(card_text);
         
         card.append(image);
         card.append(card_body);
