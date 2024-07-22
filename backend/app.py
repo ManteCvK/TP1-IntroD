@@ -77,7 +77,7 @@ def nuevo_contenido():
         nueva_plataforma = data.get('plataforma')
         nuevo_tipo = data.get ('tipo')
         nueva_imagen = data.get('imagen')
-        kids = data.get('estado')
+        kids = data.get('kids')
         if kids == 0:
             nuevo_kids = False
         else:
