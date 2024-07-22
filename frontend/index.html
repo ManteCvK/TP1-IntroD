@@ -32,26 +32,26 @@
  <br>
  <br>
  <br>
-  <form class="container">
+  <form class="container" onsubmit="crear_contenido(event)">
     <h3> ¿Hay algun elemento que desees agregar?</h3>
     <br>
     <div class="col-auto">
       <label class="form-label">Nombre:</label>
-      <input type="text" class="form-control" placeholder="Ingrese nombre aqui">
+      <input type="text" class="form-control" placeholder="Ingrese nombre aqui" name="nombre" id="nombre" required>
       <br>
     </div>
     <div class="col-auto">
       <label class="form-label">Tipo:</label>
-      <select class="form-select" aria-label="Default select example">
+      <select class="form-select" aria-label="Default select example" name="pos" id="pos" required>
         <option disabled selected>Seleccione el tipo</option>
-        <option value="1">Pelicula</option>
-        <option value="0">Serie</option>
+        <option value="0">Pelicula</option>
+        <option value="1">Serie</option>
       </select>
       <br>
     </div>
     <div class="col-auto">
       <label class="form-label">Genero:</label>
-      <select class="form-select" aria-label="Default select example">
+      <select class="form-select" aria-label="Default select example" name="genero" id="genero" required>
         <option disabled selected>Seleccione el genero</option>
         <option value="0">Terror</option>
         <option value="1">Romantico</option>                
@@ -65,7 +65,7 @@
     </div>
     <div class="col-sm">
       <label class="form-label">Plataforma:</label>
-      <select class="form-select" aria-label="Default select example">
+      <select class="form-select" aria-label="Default select example" name="plataforma" id="plataforma" required>
         <option disabled selected>Seleccione la plataforma</option>
         <option value="0">Netflix</option>
         <option value="1">HBO</option>                
@@ -77,14 +77,23 @@
     </div>
     <div class="col-auto">   
      <label class="form-label">Fecha de estreno:</label>
-     <input type="date" class="form-control">
+     <input type="number" class="form-control" name="fecha" id="fecha" min="1900" max="2024" placeholder="Ingrese el año" required >
     </div>
     <div class ="col-auto">    
       <br>         
       <div class="col-auto">
         <label class="form-label">Imagen:</label>
-        <input type="url" class="form-control" placeholder="Ingrese el link de la imagen aqui">
+        <input type="url" class="form-control" placeholder="Ingrese el link de la imagen aqui" id="imagen" name="imagen" required>
         <br>
+        <div class="col-auto">
+          <label class="form-label">¿Es apto para niños?</label>
+          <select class="form-select" aria-label="Default select example" name="kids" id="kids" required>
+            <option disabled selected>Seleccione la opcion</option>
+            <option value="1">Si</option>
+            <option value="0">No</option>
+          </select>
+          <br>
+        </div>
       </div>
       <button type="submit" class="btn btn-primary">Agregar Contenido</button>
     </div>
@@ -152,6 +161,50 @@
       .then(response_received)
       .then(parse_data)
       .catch(request_error)
+
+    
+    function create_response(data) {
+      alert("Contenido creado exitosamente")
+      window.location.href = "/";
+    } 
+       
+
+    function crear_contenido(event){
+      event.preventDefault()
+
+      const formdata = new FormData(event.target)
+
+      const nombre = formdata.get("nombre")
+      const fecha = formdata.get("fecha")
+      const genero = formdata.get("genero")
+      const peli_o_serie = formdata.get("pos")
+      const imagen = formdata.get("imagen")
+      const plataforma = formdata.get("plataforma")
+      const kids = formdata.get("kids")
+
+
+      fetch(
+        "http://localhost:5000/contenidos",
+        { method: "POST" ,
+          headers:{
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            nombre: nombre,
+            genero: genero,
+            fecha: fecha,
+            plataforma: plataforma,
+            tipo: peli_o_serie,
+            imagen: imagen,
+            kids: kids,
+          })
+        } 
+        )
+        .then(response_received)
+        .then(create_response)
+        .catch(request_error)
+      
+    }
       
   </script>
 </body>

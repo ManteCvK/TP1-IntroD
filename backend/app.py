@@ -68,49 +68,44 @@ def borrar(id_contenido):
 @app.route("/contenidos", methods = ["POST"])
 def nuevo_contenido():
     try: 
+        contenidos = Contenido.query.all()
+        id = int(contenidos[-1].id) + 1
         data= request.json
         nuevo_nombre = data.get('nombre')
         nuevo_genero = data.get('genero')
-        nueva_fecha_lunch = data.get('fecha de lanzamiento')
+        nueva_fecha_lunch = data.get('fecha')
         nueva_plataforma = data.get('plataforma')
         nuevo_tipo = data.get ('tipo')
-        nuevo_kids = data.get ('kids')
-        nuevo_contenido = Contenido(nombre=nuevo_nombre, genero = nuevo_genero, fecha_lunch = nueva_fecha_lunch, 
-        donde_ver = nueva_plataforma, tipo = nuevo_tipo, kids = nuevo_kids),201
-        db.session.add(nuevo_contenido)
-        db.session.commit()
-
-        return (jsonify({'contenido':{'id':nuevo_contenido.id, 'nombre': nuevo_contenido.nombre, 
-        'genero':nuevo_contenido.genero, 'fecha de lanzamiento': nuevo_contenido.fecha_lunch, 
-        'plataforma donde ver': nuevo_contenido.donde_ver, 'tipo': nuevo_contenido.peli_o_serie, 
-        'kids':nuevo_contenido.kids }}))
+        nueva_imagen = data.get('imagen')
+        kids = data.get('estado')
+        if kids == 0:
+            nuevo_kids = False
+        else:
+            nuevo_kids = True
+            
+        nuevo_estado = '2'
+        nuevo_contenido = Contenido(id=id, nombre=nuevo_nombre, genero = nuevo_genero, fecha_lunch = nueva_fecha_lunch, 
+        donde_ver = nueva_plataforma, peli_o_serie = nuevo_tipo, kids = nuevo_kids, imagen = nueva_imagen, estado=nuevo_estado), 201
+        for item in nuevo_contenido:
+            db.session.add(item)
+            db.session.commit()
+        return {"success": True}
     
     except Exception as error:
         print(error)
         return (jsonify("no se pudo agregar el nuevo contenido")),500
 
-@app.route("/contenidos", methods = ["PUT"])
-def modificar_contenido():
-    id = request.json.get("id")
-    name = request.json.get("name")
-    names = request.json.get("names")
-    publisher = request.json.get("publisher")
-    gender = request.json.get("gender")
-    alignment = request.json.get("alignment")
-    image = request.json.get("image")
-    race = request.json.get("race")
-
-    character = {
-        "id": id,
-        "name": name,
-        "names": names,
-        "publisher": publisher,
-        "gender": gender,
-        "alignment": alignment,
-        "image": image,
-        "race": race
-    }
-    return {"success": "id"}
+@app.route("/contenidos/<id_contenido>", methods = ["PUT"])
+def modificar_contenido(id_contenido):   
+    try: 
+        contenido= Contenido.query.get(id_contenido)
+        data = request.json
+        nuevo_estado = data.get('estado')
+        contenido.estado = nuevo_estado
+        db.session.commit()
+        return {"success": True}
+    except:
+     return {"success": False}
 
 if __name__ == '__main__':
     print('starting server...')

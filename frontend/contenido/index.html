@@ -46,9 +46,10 @@
                 </div>
                 <div class="card-footer text-center"> 
                   
-                    <button class="btn btn-secondary" onclick="editar_contenido()"> Agregar a la lista</button>
-                    <button class="btn btn-success" onclick="editar_contenido()">Marcar como terminado</button>
-                    <button class="btn btn-primary" onclick="editar_contenido()">Sacar de mi lista</button>
+                    <button class="btn btn-secondary" onclick="editar_estado(1)"> Agregar a la lista</button>
+                    <button class="btn btn-primary" onclick="editar_estado(3)">Marcar como viendo</button>
+                    <button class="btn btn-success" onclick="editar_estado(0)">Marcar como terminado</button>
+                    <button class="btn btn-info" onclick="editar_estado(2)">Sacar de mi lista</button>
                     <br>
                     <br>
                     <button class="btn btn-danger" onclick="borrar_contenido()">Borrar</button>
@@ -141,6 +142,8 @@
          estado.append("Estado: Visto");
         if (content.estado == 1)
          estado.append("Estado: En lista");
+        if(content.estado ==3)
+         estado.append("Estado: Viendo")
 
 
         const fecha = document.getElementById("fecha");
@@ -181,6 +184,32 @@
             .then(delete_response)
             .catch(handle_error)
     }
+    function edit_response(data) {
+        if (data.success) {
+            location.reload();
+        } else {
+            alert("Error!")
+        }
+    }
+
+    function editar_estado(estado){
+        const nuevo_estado = estado 
+        fetch(
+        `http://localhost:5000/contenidos/${id}`,
+        { method: "PUT" ,
+          headers:{
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            estado: nuevo_estado,
+          })
+        } 
+        )
+        .then(response_received)
+        .then(edit_response)
+        .catch(handle_error)
+    }
+
 
 </script>
 </body>
