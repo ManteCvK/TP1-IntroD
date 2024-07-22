@@ -77,7 +77,7 @@ def nuevo_contenido():
         nueva_plataforma = data.get('plataforma')
         nuevo_tipo = data.get ('tipo')
         nueva_imagen = data.get('imagen')
-        kids = data.get('estado')
+        kids = data.get('kids')
         if kids == 0:
             nuevo_kids = False
         else:
@@ -102,6 +102,34 @@ def modificar_contenido(id_contenido):
         data = request.json
         nuevo_estado = data.get('estado')
         contenido.estado = nuevo_estado
+        db.session.commit()
+        return {"success": True}
+    except:
+     return {"success": False}
+    
+@app.route("/contenidos/edit/<id_contenido>", methods = ["PUT"])
+def modificar_todo_contenido(id_contenido):   
+    try: 
+        contenido= Contenido.query.get(id_contenido)
+        data = request.json
+        nuevo_nombre = data.get('nombre')
+        nuevo_genero = data.get('genero')
+        nueva_fecha_lunch = data.get('fecha')
+        nueva_plataforma = data.get('plataforma')
+        nuevo_tipo = data.get ('tipo')
+        nueva_imagen = data.get('imagen')
+        kids = data.get('kids')
+        if kids == 0:
+            nuevo_kids = False
+        else:
+            nuevo_kids = True
+        contenido.nombre = nuevo_nombre
+        contenido.peli_o_serie = nuevo_tipo
+        contenido.genero = nuevo_genero
+        contenido.fecha_lunch = nueva_fecha_lunch
+        contenido.donde_ver = nueva_plataforma
+        contenido.imagen = nueva_imagen
+        contenido.kids = nuevo_kids
         db.session.commit()
         return {"success": True}
     except:

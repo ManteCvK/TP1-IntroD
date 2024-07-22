@@ -25,15 +25,8 @@
     </header>
   </div>
 
-  <div class="container" >
-     <div class="row g-4" id="contenidos">
-  </div>
-  </div>
- <br>
- <br>
- <br>
-  <form class="container" onsubmit="crear_contenido(event)">
-    <h3> ¿Hay algun elemento que desees agregar?</h3>
+  <form class="container" onsubmit="editar_contenido(event)">
+    <h3> ¿Deseas editar el contenido?</h3>
     <br>
     <div class="col-auto">
       <label class="form-label">Nombre:</label>
@@ -43,7 +36,6 @@
     <div class="col-auto">
       <label class="form-label">Tipo:</label>
       <select class="form-select" aria-label="Default select example" name="pos" id="pos" required>
-        <option disabled selected>Seleccione el tipo</option>
         <option value="0">Pelicula</option>
         <option value="1">Serie</option>
       </select>
@@ -52,7 +44,6 @@
     <div class="col-auto">
       <label class="form-label">Genero:</label>
       <select class="form-select" aria-label="Default select example" name="genero" id="genero" required>
-        <option disabled selected>Seleccione el genero</option>
         <option value="0">Terror</option>
         <option value="1">Romantico</option>                
         <option value="2">Ciencia Ficcion</option>
@@ -67,7 +58,6 @@
     <div class="col-sm">
       <label class="form-label">Plataforma:</label>
       <select class="form-select" aria-label="Default select example" name="plataforma" id="plataforma" required>
-        <option disabled selected>Seleccione la plataforma</option>
         <option value="0">Netflix</option>
         <option value="1">HBO</option>                
         <option value="2">Prime Video</option>
@@ -90,13 +80,15 @@
           <label class="form-label">¿Es apto para niños?</label>
           <select class="form-select" aria-label="Default select example" name="kids" id="kids" required>
             <option disabled selected>Seleccione la opcion</option>
-            <option value="1">Si</option>
-            <option value="0">No</option>
+            <option value=true>Si</option>
+            <option value=false>No</option>
           </select>
           <br>
         </div>
-      </div>
-      <button type="submit" class="btn btn-primary">Agregar Contenido</button>
+      </div>      
+      <button class="btn btn-primary">Volver</button>
+      <button type="submit" class="btn btn-warning">Guardar</button>
+
     </div>
 
   </form>
@@ -112,102 +104,104 @@
     </footer>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-  crossorigin="anonymous"></script>
+        crossorigin="anonymous"></script>
 
 
 
-  <script>
-   function response_received(response) {
-     return response.json()
+ <script>
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
 
+    if (id === null) {
+        window.location.href = "/";
     }
+
+    function response_received(response) {
+        return response.json()
+    }
+
     function parse_data(content) {
-      const container = document.getElementById("contenidos");
-      for (let index = 0; index < content.length; index++) {
-        const item = document.createElement("div");
-        item.setAttribute("class", "col-6 col-md-4 col-lg-3 col-xl-2");
-        const card = document.createElement("a");
-        card.setAttribute("class", "card text-decoration-none");
-        card.setAttribute("href", `/contenido?id=${content[index].id}`);
 
-        const image = document.createElement("img");
-        image.setAttribute("class", "card-img-top");
-        image.setAttribute("src", content[index].imagen)
-        image.setAttribute("width", 300);
-        image.setAttribute("height", 380);
+        const image = document.getElementById("imagen");
+        image.value = content.imagen;
 
-        const card_body = document.createElement("div");
-        card_body.setAttribute("class", "card-body");
-        card_body.append(content[index].nombre);
-        const card_text = document.createElement("h3");
-        card_text.setAttribute("class","card-title align-center");
-        card_body.append(card_text);
-        
-        card.append(image);
-        card.append(card_body);
-        item.append(card);
+        const nombre = document.getElementById("nombre");
+        nombre.value=content.nombre;
 
-        container.append(item);
-      }
+        const tipo = document.getElementById("pos");
+        if (content.tipo == 0)
+         {tipo.value = 0;}
+        if (content.tipo == 1)
+         {tipo.value = 1;}
+
+        const genero = document.getElementById("genero");
+        genero.value = content.genero
+
+
+        const plataforma = document.getElementById("plataforma");
+        plataforma.value = content.plataforma
+
+        const fecha = document.getElementById("fecha");
+        fecha.value = content.fecha
+
+        const kids = document.getElementById("kids")
+        kids.value = content.kids
     }
 
-    function request_error(error) {
-      console.log("ERROR")
-      console.log(error);
+    function handle_error(error) {
+        console.log("Error!", error)
     }
 
-    fetch("http://localhost:5000/contenidos")
-      .then(response_received)
-      .then(parse_data)
-      .catch(request_error)
-
-    
-    function create_response(data) {
-      alert("Contenido creado exitosamente")
-      window.location.href = "/";
-    } 
-       
-
-    function crear_contenido(event){
-      event.preventDefault()
-
-      const formdata = new FormData(event.target)
-
-      const nombre = formdata.get("nombre")
-      const fecha = formdata.get("fecha")
-      const genero = formdata.get("genero")
-      const peli_o_serie = formdata.get("pos")
-      const imagen = formdata.get("imagen")
-      const plataforma = formdata.get("plataforma")
-      const kids = formdata.get("kids")
+    fetch(`http://localhost:5000/contenidos/${id}`)
+        .then(response_received)
+        .then(parse_data)
+        .catch(handle_error)
 
 
-      fetch(
-        "http://localhost:5000/contenidos",
-        { method: "POST" ,
+    function edit_response(data) {
+        if (data.success) {
+            alert("Contenido Editado exitosamente")
+            window.location.href = "/";
+        }
+        else
+            alert("error!")
+    }
+
+    function editar_contenido(event){
+        event.preventDefault()
+        const formdata = new FormData(event.target)
+        const nombre = formdata.get("nombre")
+        const fecha = formdata.get("fecha")
+        const genero = formdata.get("genero")
+        const peli_o_serie = formdata.get("pos")
+        const imagen = formdata.get("imagen")
+        const plataforma = formdata.get("plataforma")
+        const kids = formdata.get("kids")
+        fetch(
+        `http://localhost:5000/contenidos/edit/${id}`,
+        { method: "PUT" ,
           headers:{
             "Content-Type": "application/json"
           },
           body: JSON.stringify({
             nombre: nombre,
-            genero: genero,
             fecha: fecha,
-            plataforma: plataforma,
+            genero: genero,
             tipo: peli_o_serie,
             imagen: imagen,
-            kids: kids,
+            plataforma:plataforma,
+            kids:kids,
           })
         } 
         )
         .then(response_received)
-        .then(create_response)
-        .catch(request_error)
-      
+        .then(edit_response)
+        .catch(handle_error)
     }
-      
-  </script>
-</body>
 
+
+</script>
+</body>
 </html>

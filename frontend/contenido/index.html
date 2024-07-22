@@ -53,7 +53,7 @@
                     <br>
                     <br>
                     <button class="btn btn-danger" onclick="borrar_contenido()">Borrar</button>
-                    <a id="btnEdit" class="btn btn-warning" href="/character/edit">Editar</a>
+                    <a  class="btn btn-warning" id = "edit">Editar</a>
                 </div>
             </div>
         </div>
@@ -89,8 +89,11 @@
 
     function parse_data(content) {
 
+        const edit = document.getElementById("edit");
+        edit.setAttribute("href", `/contenido/edit?id=${id}`);
+
         const image = document.getElementById("imagen");
-        image.setAttribute("src", content.imagen)
+        image.setAttribute("src", content.imagen);
 
         const nombre = document.getElementById("nombre");
         nombre.setAttribute("class", "card-title");
