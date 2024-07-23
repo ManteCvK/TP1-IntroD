@@ -14,7 +14,7 @@
   <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">    
       <a class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
           <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-          <span class="fs-2">Watchlist</span>
+          <span class="fs-2">MI LISTA</span>
         </a>
         <ul class="nav nav-pills">
           <li class="nav-item"><a href="/" class="nav-link active" >Home</a></li>
@@ -24,6 +24,9 @@
         </ul>
   </header>
   </div>
+  <div class="container" >
+    <div class="row g-4" id="lista">
+ </div>
 
   <div class="container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
@@ -36,9 +39,50 @@
     </footer>
   </div>
 
+  <script>
+    function response_lista(response) {
+     return response.json()
 
- <script>
+    }
+    function parse_data_lista(content) {
+      const container = document.getElementById("lista");
+      for (let index = 0; index < content.length; index++) {
+        const item = document.createElement("div");
+        item.setAttribute("class", "col-6 col-md-4 col-lg-3 col-xl-2");
+        const card = document.createElement("a");
+        card.setAttribute("class", "card text-decoration-none");
+        card.setAttribute("href", `/contenido?id=${content[index].id}`);
 
+        const image = document.createElement("img");
+        image.setAttribute("class", "card-img-top");
+        image.setAttribute("src", content[index].imagen)
+        image.setAttribute("width", 300);
+        image.setAttribute("height", 380);
+
+        const card_body = document.createElement("div");
+        card_body.setAttribute("class", "card-body");
+        card_body.append(content[index].nombre);
+        const card_text = document.createElement("h3");
+        card_text.setAttribute("class","card-title align-center");
+        card_body.append(card_text);
+        
+        card.append(image);
+        card.append(card_body);
+        item.append(card);
+
+        container.append(item);
+      }
+    }
+
+    function request_error_lista(error) {
+      console.log("ERROR")
+      console.log(error);
+    }
+
+    fetch("http://localhost:5000/lista")
+      .then(response_lista)
+      .then(parse_data_lista)
+      .catch(request_error_lista)
 </script>
 </body>
 </html>
