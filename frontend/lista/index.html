@@ -30,7 +30,7 @@
 
   <div class="container">
     <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
-      <p class="col-md-4 mb-0 text-body-secondary">© 2024 Company, Inc</p>
+      <p class="col-md-4 mb-0 text-body-secondary">© 2024 K.I.S.S, Inc</p>
       <ul class="nav col-md-4 justify-content-end">
         <li class="nav-item"><a href="/" class="nav-link px-2 text-body-secondary">Home</a></li>
         <li class="nav-item"><a href="/lista" class="nav-link px-2 text-body-secondary">Mi Lista</a></li>
@@ -61,10 +61,24 @@
 
         const card_body = document.createElement("div");
         card_body.setAttribute("class", "card-body");
-        card_body.append(content[index].nombre);
-        const card_text = document.createElement("h3");
+        const card_text = document.createElement("h5");
         card_text.setAttribute("class","card-title align-center");
+        card_text.append(content[index].nombre);
         card_body.append(card_text);
+        const card_innert = document.createElement("p");
+        if (content[index].estado=='0'){
+          card_innert.append("Visto");
+          card_innert.setAttribute("class","text-success");
+        }
+        if (content[index].estado=='1'){
+          card_innert.append("Para Ver");
+          card_innert.setAttribute("class","text-info");
+        }
+        if (content[index].estado=='3'){
+          card_innert.append("Viendo");
+          card_innert.setAttribute("class","text-warning");
+        }
+        card_body.append(card_innert);
         
         card.append(image);
         card.append(card_body);
