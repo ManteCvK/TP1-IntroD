@@ -86,7 +86,7 @@
           <br>
         </div>
       </div>      
-      <button class="btn btn-primary">Volver</button>
+      <a  class="btn btn-primary" id ="volver" href="/">Volver</a>
       <button type="submit" class="btn btn-warning">Guardar</button>
 
     </div>
@@ -124,6 +124,9 @@
 
     function parse_data(content) {
 
+        const volver = document.getElementById("volver");
+        volver.setAttribute("href", `/contenido?id=${id}`);
+
         const image = document.getElementById("imagen");
         image.value = content.imagen;
 
@@ -147,7 +150,12 @@
         fecha.value = content.fecha
 
         const kids = document.getElementById("kids")
-        kids.value = content.kids
+        if (content.kids == true){
+          kids.value = 1;
+        }
+        if (content.kids == false){
+          kids.value = 0;
+        }
     }
 
     function handle_error(error) {
