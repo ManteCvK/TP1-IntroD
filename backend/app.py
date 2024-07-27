@@ -68,8 +68,12 @@ def borrar(id_contenido):
 @app.route("/contenidos", methods = ["POST"])
 def nuevo_contenido():
     try: 
+        mayor = 0
         contenidos = Contenido.query.all()
-        id = int(contenidos[-1].id) + 1
+        for datos in contenidos:
+            if datos.id > mayor:
+                mayor=datos.id
+        id=mayor+1
         data= request.json
         nuevo_nombre = data.get('nombre')
         nuevo_genero = data.get('genero')
@@ -78,7 +82,6 @@ def nuevo_contenido():
         nuevo_tipo = data.get ('tipo')
         nueva_imagen = data.get('imagen')
         kids = data.get('kids')
-
         if kids == '0':
             nuevo_kids = False
         elif kids == '1':
@@ -86,15 +89,14 @@ def nuevo_contenido():
     
         nuevo_estado = '2'
         nuevo_contenido = Contenido(id=id, nombre=nuevo_nombre, genero = nuevo_genero, fecha_lunch = nueva_fecha_lunch, 
-        donde_ver = nueva_plataforma, peli_o_serie = nuevo_tipo, kids = nuevo_kids, imagen = nueva_imagen, estado=nuevo_estado), 201
+        donde_ver = nueva_plataforma, peli_o_serie = nuevo_tipo, kids = nuevo_kids, imagen = nueva_imagen, estado=nuevo_estado), 
         for item in nuevo_contenido:
             db.session.add(item)
             db.session.commit()
         return {"success": True}
     
-    except Exception as error:
-        print(error)
-        return (jsonify("no se pudo agregar el nuevo contenido")),500
+    except:
+        return {"success": True}
 
 @app.route("/contenidos/<id_contenido>", methods = ["PUT"])
 def modificar_contenido(id_contenido):   
